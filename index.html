@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>باگ تخفیف فروشگاه</title>
+<style>
+  :root{
+    --bg:#0a100d;
+    --card:#1C2E22;
+    --card-2:#24402E;
+    --border:#33513C;
+    --text:#F7FCF0;
+    --muted:#8FAE9A;
+    --accent:#A0E747;
+    --danger:#FF4D4F;
+    --warn:#FFD23F;
+    --ok:#34C759;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Vazirmatn","IRANSans","Segoe UI",Tahoma,Arial,sans-serif;
+    padding:20px 14px 40px;
+    min-height:100vh;
+  }
+  .wrap{max-width:480px;margin:0 auto;}
+  .brand-badge{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-bottom:14px;opacity:.8;}
+  .brand-badge img{width:22px;height:22px;display:block;}
+  .brand-badge span{font-size:11px;letter-spacing:.4px;color:var(--muted);}
+  .store-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:10px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px 18px;
+    margin-bottom:16px;
+  }
+  .product{
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+  .product-icon{
+    width:64px;height:64px;
+    border-radius:14px;
+    background:var(--card-2);
+    display:flex;align-items:center;justify-content:center;
+    font-size:32px;
+    flex:none;
+  }
+  .product-info h2{margin:0 0 4px;font-size:16px;}
+  .product-info p{margin:0;color:var(--muted);font-size:12.5px;}
+
+  .field{margin-top:16px;}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;}
+  .field-row{
+    display:flex;
+    align-items:center;
+    background:var(--card-2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:4px 6px;
+  }
+  .field-row input{
+    flex:1;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:var(--text);
+    font-size:16px;
+    padding:10px 8px;
+    font-family:inherit;
+    direction:ltr;
+    text-align:left;
+  }
+  .field-row span{color:var(--muted);padding:0 8px;font-size:14px;}
+
+  .price-box{
+    margin-top:18px;
+    background:var(--card-2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px 16px;
+  }
+  .price-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:6px;
+  }
+  .price-row.total{
+    margin-top:8px;
+    padding-top:10px;
+    border-top:1px dashed var(--border);
+    font-size:17px;
+    font-weight:700;
+    color:var(--text);
+  }
+  .price-row.total.bug{color:var(--danger);}
+  .price-row.total.ok{color:var(--ok);}
+
+  .buy-btn{
+    width:100%;
+    margin-top:14px;
+    padding:13px;
+    border:none;
+    border-radius:12px;
+    background:var(--accent);
+    color:#0f1a12;
+    font-family:inherit;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+  }
+
+  .alert{
+    margin-top:14px;
+    border-radius:12px;
+    padding:14px 16px;
+    font-size:13.5px;
+    line-height:1.9;
+    display:none;
+  }
+  .alert.show{display:block;}
+  .alert.danger{background:rgba(255,92,114,.1);border:1px solid rgba(255,92,114,.3);color:var(--danger);}
+  .alert.warn{background:rgba(255,184,77,.1);border:1px solid rgba(255,184,77,.3);color:var(--warn);}
+
+  .explain{
+    color:var(--muted);
+    font-size:12.5px;
+    line-height:2;
+    margin:0;
+  }
+
+  .course-banner{
+    margin-top:22px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:8px;
+    padding:18px 16px;
+    border-radius:14px;
+    background:linear-gradient(135deg, rgba(160,231,71,.14), rgba(160,231,71,.03));
+    border:1px solid rgba(160,231,71,.28);
+  }
+  .course-banner img{width:52px;height:52px;display:block;}
+  .course-banner strong{display:block;font-size:14px;color:var(--text);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand-badge">
+    <span>Morales . 042</span>
+  </div>
+
+  <div class="card">
+    <div class="store-badge">🛒 فروشگاه . نوروز مارکت»</div>
+    <div class="product">
+      <div class="product-icon">💻</div>
+      <div class="product-info">
+        <h2>لپ‌تاپ گیمینگ ASUS</h2>
+        <p>قیمت پایه: 200,000,000 تومان</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>کد/درصد تخفیف</label>
+      <div class="field-row">
+        <input type="text" inputmode="numeric" id="discountInput" placeholder="۰" value="۰">
+        <span>%</span>
+      </div>
+    </div>
+
+    <div class="price-box">
+      <div class="price-row">
+        <span>قیمت پایه</span>
+        <span id="basePrice">۵۰٬۰۰۰٬۰۰۰ تومان</span>
+      </div>
+      <div class="price-row">
+        <span>تخفیف</span>
+        <span id="discountAmount">۰ تومان</span>
+      </div>
+      <div class="price-row total ok" id="totalRow">
+        <span>مبلغ نهایی</span>
+        <span id="finalPrice">۵۰٬۰۰۰٬۰۰۰ تومان</span>
+      </div>
+    </div>
+
+    <button class="buy-btn" id="buyBtn">تکمیل خرید</button>
+
+    <div class="alert danger" id="bugAlert">
+      🚨 <b>مدیر فروشگاه از خواب پرید!</b> با وارد کردن درصد تخفیف ۱۰۰ یا بیشتر، قیمت نهایی صفر یا حتی منفی شد. این یعنی فروشگاه می‌تونست به‌جای گرفتن پول، پول هم پس بده!
+    </div>
+    <div class="alert warn" id="warnAlert">
+      ⚠️ توجه کن که این عدد هیچ محدودیتی نداره — نه بین ۰ تا ۱۰۰ محدود شده، نه توسط یک «سرور واقعی» بررسی می‌شه (چون این فقط یک دموی سمت مرورگره).
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="explain">
+      💡 این یک نمونه از <b>آسیب‌پذیری منطق کسب‌وکار (Business Logic Flaw)</b> است. مشکل اینجا این نیست که رمزی لو رفته یا کسی هک شده؛ مشکل اینه که به یک ورودی سمت کاربر (درصد تخفیف) بدون بررسی اعتماد شده.<br><br>
+      تو دنیای واقعی، این نوع اعتبارسنجی باید حتماً سمت سرور هم انجام بشه، نه فقط تو مرورگر کاربر. شرکت‌ها برای پیدا کردن دقیقاً همین نوع باگ‌ها، برنامهٔ <b>Bug Bounty</b> راه می‌ندازن و به کسی که این باگ رو گزارش کنه، پاداش می‌دن.
+    </p>
+  </div>
+
+  <div class="course-banner">
+    <strong>ساخته شده توسط آبتین نوروزی</strong>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const BASE_PRICE = 200000000;
+  const discountInput = document.getElementById('discountInput');
+  const discountAmount = document.getElementById('discountAmount');
+  const finalPriceEl = document.getElementById('finalPrice');
+  const totalRow = document.getElementById('totalRow');
+  const bugAlert = document.getElementById('bugAlert');
+  const warnAlert = document.getElementById('warnAlert');
+  const buyBtn = document.getElementById('buyBtn');
+
+  const PERSIAN_DIGITS = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  function toPersianDigits(str){
+    return String(str).replace(/[0-9]/g, function(d){ return PERSIAN_DIGITS[d]; });
+  }
+  function toEnglishDigits(str){
+    return String(str).replace(/[۰-۹]/g, function(d){ return String(PERSIAN_DIGITS.indexOf(d)); });
+  }
+
+  function formatToman(n){
+    const rounded = Math.round(n);
+    const negative = rounded < 0;
+    const withCommas = Math.abs(rounded).toLocaleString('en-US').replace(/,/g, '٬');
+    return (negative ? '−' : '') + toPersianDigits(withCommas) + ' تومان';
+  }
+
+  discountInput.addEventListener('input', function(){
+    let raw = toEnglishDigits(discountInput.value).replace(/[^0-9-]/g, '');
+    const negative = raw.indexOf('-') === 0;
+    raw = raw.replace(/-/g, '').replace(/^0+(?=\d)/, '');
+    discountInput.value = (negative ? '-' : '') + toPersianDigits(raw || '0');
+  });
+
+  function update(){
+    let pct = parseFloat(toEnglishDigits(discountInput.value));
+    if(isNaN(pct)) pct = 0;
+
+    const discountValue = BASE_PRICE * (pct / 100);
+    const finalPrice = BASE_PRICE - discountValue;
+
+    discountAmount.textContent = formatToman(discountValue);
+    finalPriceEl.textContent = formatToman(finalPrice);
+
+    if(pct >= 100){
+      totalRow.className = 'price-row total bug';
+      bugAlert.className = 'alert danger show';
+      warnAlert.className = 'alert warn show';
+    } else if(pct > 40){
+      totalRow.className = 'price-row total';
+      totalRow.style.color = 'var(--warn)';
+      bugAlert.className = 'alert danger';
+      warnAlert.className = 'alert warn show';
+    } else {
+      totalRow.className = 'price-row total ok';
+      totalRow.style.color = '';
+      bugAlert.className = 'alert danger';
+      warnAlert.className = 'alert warn';
+    }
+  }
+
+  discountInput.addEventListener('input', update);
+  buyBtn.addEventListener('click', function(){
+    update();
+    const pct = parseFloat(discountInput.value) || 0;
+    if(pct >= 100){
+      bugAlert.className = 'alert danger show';
+    }
+  });
+
+  update();
+})();
+</script>
+</body>
+</html>
